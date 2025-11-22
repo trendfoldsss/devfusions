@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevFusions | Web & Shopify Solutions · AI & SaaS Studio</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    :root {
+      --font-family: 'Inter', sans-serif;
+      --transition-speed: 0.4s;
+      --blur-intensity: 24px;
+      --border-radius-large: 1.5rem;
+      --border-radius-medium: 0.75rem;
+      --shadow-soft: 0 18px 55px rgba(0, 0, 0, 0.6);
+
+      /* Emerald / Green palette */
+      --color-bg: #020617; /* deep slate/black */
+      --color-bg-secondary: #020b11;
+      --color-text: #F9FAFB;
+      --color-text-secondary: #9CA3AF;
+      --color-accent: #065F46;      /* deep emerald */
+      --color-emerald: #10B981;     /* main emerald */
+      --color-emerald-soft: rgba(16, 185, 129, 0.18);
+
+      --glass-bg-opacity: rgba(3, 10, 16, 0.92);
+      --glass-border: 1px solid rgba(16, 185, 129, 0.25);
+
+      --btn-primary-bg: #10B981;
+      --btn-primary-text: #020617;
+      --btn-secondary-border-color: rgba(148, 163, 184, 0.7);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color var(--transition-speed), opacity var(--transition-speed), background-color 0.25s;
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 5vw + 1rem, 4.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 3vw + 1rem, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .section {
+      padding: 5rem 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .glass-effect {
+      background: var(--glass-bg-opacity);
+      backdrop-filter: blur(var(--blur-intensity));
+      -webkit-backdrop-filter: blur(var(--blur-intensity));
+      border: var(--glass-border);
+      border-radius: var(--border-radius-medium);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .glass-card {
+      background: radial-gradient(circle at top left, rgba(16,185,129,0.08), transparent 55%), var(--glass-bg-opacity);
+      backdrop-filter: blur(var(--blur-intensity));
+      -webkit-backdrop-filter: blur(var(--blur-intensity));
+      border: var(--glass-border);
+      border-radius: var(--border-radius-large);
+      box-shadow: var(--shadow-soft);
+      color: var(--color-text);
+      padding: 2rem;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.3s, background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 0% 0%, rgba(16,185,129,0.16), transparent 56%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .glass-card:hover::before {
+      opacity: 1;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.85);
+      border-color: rgba(16, 185, 129, 0.6);
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 0.85rem 1.25rem;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: linear-gradient(to bottom, rgba(3, 7, 18, 0.96), rgba(3, 7, 18, 0.88), transparent);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+    }
+
+    .logo {
+      font-weight: 900;
+      font-size: 1.3rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* HERO */
+    .hero-section {
+      position: relative;
+      overflow: hidden;
+      padding-top: 7.5rem;
+      padding-bottom: 4.5rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-bg-gradient {
+      position: absolute;
+      inset: 0;
+      z-index: -10;
+      background:
+        radial-gradient(circle at 0% 0%, #064E3B 0, transparent 45%),
+        radial-gradient(circle at 100% 20%, #022C22 0, transparent 55%),
+        radial-gradient(circle at 50% 100%, #020617 0, #020617 70%);
+    }
+
+    .hero-grid,
+    .service-grid,
+    .benefit-grid,
+    .about-grid,
+    .contact-grid,
+    .footer-grid,
+    .work-grid,
+    .process-grid,
+    .reviews-grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .hero-grid { align-items: center; }
+
+    .subheading {
+      color: var(--color-text-secondary);
+      font-size: 0.98rem;
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      background: rgba(6, 95, 70, 0.55);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ECFDF5;
+    }
+
+    /* Accent line */
+    .accent-line {
+      width: 80px;
+      height: 2px;
+      margin: 0.4rem auto 0.2rem;
+      position: relative;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(16,185,129,0.15);
+    }
+    .accent-line::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(16,185,129,0.2), #6EE7B7, #10B981);
+      opacity: 0.95;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.5rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background-color 0.25s, color 0.25s, border-color 0.25s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.35);
+      white-space: nowrap;
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .primary-btn {
+      background-color: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border-color: var(--btn-primary-bg);
+    }
+
+    .primary-btn:hover {
+      background-color: #059669;
+      border-color: #059669;
+      color: #ECFDF5;
+      box-shadow: 0 16px 40px rgba(16, 185, 129, 0.55);
+    }
+
+    .secondary-btn {
+      background-color: transparent;
+      color: var(--color-text);
+      border-color: var(--btn-secondary-border-color);
+      box-shadow: none;
+    }
+
+    .secondary-btn:hover {
+      border-color: rgba(16, 185, 129, 0.7);
+      background-color: rgba(6, 78, 59, 0.65);
+    }
+
+    /* FLOATING CALL BUTTON */
+    .cta-float {
+      position: fixed;
+      bottom: 1.45rem;
+      right: 1.45rem;
+      border-radius: 999px;
+      color: #ECFDF5;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      gap: 0.3rem;
+      padding: 0.6rem 1.05rem;
+      z-index: 50;
+      background: linear-gradient(135deg, #10B981, #064E3B);
+      box-shadow: 0 16px 40px rgba(16, 185, 129, 0.65);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .cta-float i { font-size: 0.9rem; }
+
+    .cta-float:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 22px 55px rgba(16, 185, 129, 0.85);
+      background: linear-gradient(135deg, #059669, #022C22);
+    }
+
+    .cta-tooltip {
+      position: absolute;
+      right: 100%;
+      margin-right: 0.65rem;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0.35rem 0.8rem;
+      font-size: 0.68rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      background: rgba(3, 10, 16, 0.98);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--color-text);
+      transition: opacity 0.25s;
+    }
+
+    .cta-float:hover .cta-tooltip { opacity: 1; }
+
+    @media (max-width: 640px) {
+      .cta-tooltip { display: none; }
+    }
+
+    /* ABSTRACT 3D */
+    .abstract-graphic {
+      position: absolute;
+      z-index: 1;
+      opacity: 0.2;
+      pointer-events: none;
+      color: var(--color-text);
+    }
+
+    .abstract-orb {
+      top: 8%;
+      left: -10%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle at 30% 30%, rgba(16,185,129,0.9), transparent 65%);
+      border-radius: 999px;
+      filter: blur(40px);
+      animation: float 12s infinite ease-in-out;
+    }
+
+    .abstract-wireframe {
+      bottom: -4%;
+      right: -2%;
+      width: 260px;
+      height: 260px;
+      animation: rotate 18s infinite linear;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-22px) translateX(12px); }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* TRUST STRIP */
+    .trust-strip {
+      padding: 0 0 3.5rem;
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(6, 78, 59, 0.7);
+      border: 1px solid rgba(45, 212, 191, 0.4);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #A7F3D0;
+      white-space: nowrap;
+    }
+
+    .trust-pill i {
+      font-size: 0.8rem;
+    }
+
+    /* GRID BREAKPOINTS */
+    @media (min-width: 768px) {
+      .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .benefit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .work-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .process-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .reviews-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .contact-grid {
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr);
+        align-items: flex-start;
+      }
+      .footer-grid {
+        grid-template-columns: 2fr 1.2fr 1.8fr;
+        align-items: flex-start;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+      .service-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .benefit-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .about-grid { grid-template-columns: minmax(0, 2fr) minmax(0, 1.1fr); align-items: start; }
+    }
+
+    @media (max-width: 767px) {
+      .hero-section { padding-top: 6.5rem; }
+      .hero-ctas { flex-direction: column; width: 100%; }
+      .hero-ctas a { width: 100%; }
+      .logo { font-size: 1.1rem; }
+      .cta-float { bottom: 1.1rem; right: 1.1rem; }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- NAVBAR -->
+  <header id="home" class="navbar">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="logo tracking-[0.25em]">DevFusions</div>
+
+      <nav class="hidden lg:flex space-x-6 text-[0.7rem] font-medium uppercase tracking-[0.16em]">
+        <a href="#home" class="text-gray-300 hover:text-emerald-300">Home</a>
+        <a href="#services" class="text-gray-300 hover:text-emerald-300">Services</a>
+        <a href="#work" class="text-gray-300 hover:text-emerald-300">Work</a>
+        <a href="#process" class="text-gray-300 hover:text-emerald-300">Process</a>
+        <a href="#reviews" class="text-gray-300 hover:text-emerald-300">Reviews</a>
+        <a href="#contact" class="text-gray-300 hover:text-emerald-300">Contact</a>
+      </nav>
+
+      <div class="flex items-center space-x-3">
+        <a href="#contact" class="btn primary-btn text-[0.72rem] hidden sm:inline-flex">
+          Get Quote
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero" class="hero-section">
+      <div class="hero-bg-gradient"></div>
+
+      <!-- Abstract 3D Graphics -->
+      <div class="abstract-graphic abstract-orb"></div>
+      <div class="abstract-graphic abstract-wireframe">
+        <svg width="250" height="250" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="0.5" stroke-linecap="round"
+             stroke-linejoin="round" class="w-full h-full opacity-40">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+          <path d="M2 17l10 5 10-5"></path>
+          <path d="M2 7l10 5l10-5"></path>
+          <path d="M12 2v20"></path>
+          <path d="M12 12L2 7"></path>
+          <path d="M12 12L22 7"></path>
+          <path d="M12 12L2 17"></path>
+          <path d="M12 12L22 17"></path>
+        </svg>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 hero-grid relative z-10 gap-10">
+        <!-- Left -->
+        <div class="hero-text-content lg:text-left text-center space-y-6">
+          <div>
+            <p class="text-[0.7rem] tracking-[0.3em] uppercase text-emerald-300 mb-1">
+              Web · Shopify · AI Studio
+            </p>
+            <div class="accent-line"></div>
+          </div>
+          <h1 class="mb-3">
+            We build high-converting<br class="hidden lg:block" />
+            ecommerce & Shopify experiences.
+          </h1>
+          <p class="subheading mb-4 max-w-xl mx-auto lg:mx-0">
+            DevFusions designs advanced, 3D-inspired, conversion-focused stores powered by Shopify,
+            WordPress and custom web stacks – built for speed and clarity.
+          </p>
+
+          <div class="flex flex-wrap gap-2.5 mb-6 justify-center lg:justify-start">
+            <span class="pill px-4 py-1.5 text-[0.65rem]">Shopify & WordPress</span>
+            <span class="pill px-4 py-1.5 text-[0.65rem]">AI & SaaS Automation</span>
+            <span class="pill px-4 py-1.5 text-[0.65rem]">SEO & Growth</span>
+          </div>
+
+          <div class="hero-ctas flex gap-3 justify-center lg:justify-start">
+            <a href="#services" class="btn primary-btn text-[0.78rem]">
+              View Services
+            </a>
+            <a href="#contact" class="btn secondary-btn text-[0.78rem]">
+              Talk to Studio
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: dashboard style -->
+        <div class="lg:flex hidden justify-center items-center">
+          <div class="glass-card w-full max-w-xl aspect-video flex justify-center items-center p-8">
+            <div class="w-full h-full rounded-2xl flex items-stretch justify-between bg-gradient-to-br from-slate-950/90 via-slate-900/80 to-emerald-900/40 border border-emerald-900/70 overflow-hidden">
+              <!-- Sidebar -->
+              <div class="w-1/3 border-r border-emerald-900/60 p-4 flex flex-col justify-between text-xs">
+                <div>
+                  <p class="uppercase tracking-[0.16em] text-emerald-300 mb-3">Store overview</p>
+                  <p class="text-gray-200 mb-1">This week</p>
+                  <p class="text-2xl font-semibold text-emerald-300">Top 3%</p>
+                  <p class="text-[0.7rem] text-gray-500 mt-1">In niche conversion rate</p>
+                </div>
+                <div class="space-y-2 text-gray-300">
+                  <p>• Live users: 42</p>
+                  <p>• Conversion: 3.4%</p>
+                  <p>• Repeat buyers: 61%</p>
+                </div>
+              </div>
+              <!-- Main -->
+              <div class="flex-1 p-4 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-3 text-xs text-gray-400">
+                    <span>Funnel</span>
+                    <span>Today</span>
+                  </div>
+                  <div class="h-1.5 rounded-full bg-slate-900 overflow-hidden mb-4">
+                    <div class="h-full w-5/6 bg-emerald-400"></div>
+                  </div>
+                  <div class="grid grid-cols-3 gap-3 text-[0.7rem] text-gray-300 mb-3">
+                    <div>
+                      <p class="text-gray-500 mb-1">Visitors</p>
+                      <p class="text-sm text-gray-100">3,120</p>
+                    </div>
+                    <div>
+                      <p class="text-gray-500 mb-1">Add to cart</p>
+                      <p class="text-sm text-gray-100">620</p>
+                    </div>
+                    <div>
+                      <p class="text-gray-500 mb-1">Orders</p>
+                      <p class="text-sm text-gray-100">114</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between text-[0.7rem] text-gray-400">
+                  <span>Built with DevFusions</span>
+                  <span>Shopify · Custom theme</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST STRIP (UNIQUE STUDIO / BADGES) -->
+    <section class="trust-strip">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="glass-effect rounded-2xl px-4 sm:px-6 py-3 flex flex-col md:flex-row items-center justify-between gap-3 border border-emerald-900/80 bg-gradient-to-r from-slate-950/95 via-slate-900/90 to-emerald-950/60">
+          <div class="text-xs sm:text-sm text-gray-200 text-center md:text-left">
+            <span class="uppercase tracking-[0.22em] text-emerald-300 text-[0.65rem] block mb-1">
+              Independent studio
+            </span>
+            <span class="text-gray-300">
+              Not a marketplace profile. No bulk orders. Just a focused web & Shopify studio.
+            </span>
+          </div>
+          <div class="flex flex-wrap justify-center md:justify-end gap-2">
+            <div class="trust-pill">
+              <i class="fas fa-shield-check"></i>
+              <span>Indie studio only</span>
+            </div>
+            <div class="trust-pill">
+              <i class="fas fa-circle-notch"></i>
+              <span>Limited active projects</span>
+            </div>
+            <div class="trust-pill">
+              <i class="fas fa-layer-group"></i>
+              <span>No templates · In-house</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+        <h2 class="mb-3">What We Do</h2>
+        <h3 class="max-w-3xl mx-auto">
+          DevFusions is your one studio for Web, Shopify, AI and Growth.
+        </h3>
+
+        <div class="service-grid gap-5 mt-6">
+          <div class="glass-card text-left">
+            <div class="flex items-center justify-between mb-4">
+              <i class="fas fa-store text-2xl text-emerald-300"></i>
+              <span class="text-[0.65rem] tracking-[0.18em] uppercase text-gray-400">Ecommerce</span>
+            </div>
+            <h4 class="text-xl font-semibold mb-2">Web & Shopify Solutions</h4>
+            <p class="text-sm text-gray-300">
+              Conversion-first storefronts that feel premium, fast and simple to shop from.
+            </p>
+            <div class="mt-4 text-xs font-light text-gray-400">
+              WordPress · Shopify · Custom sites
+            </div>
+          </div>
+
+          <div class="glass-card text-left">
+            <div class="flex items-center justify-between mb-4">
+              <i class="fas fa-brain text-2xl text-emerald-300"></i>
+              <span class="text-[0.65rem] tracking-[0.18em] uppercase text-gray-400">Automation</span>
+            </div>
+            <h4 class="text-xl font-semibold mb-2">AI & SaaS Development</h4>
+            <p class="text-sm text-gray-300">
+              Custom AI tools, dashboards and SaaS features tailored around your workflow.
+            </p>
+            <div class="mt-4 text-xs font-light text-gray-400">
+              AI tools · SaaS apps · Internal panels
+            </div>
+          </div>
+
+          <div class="glass-card text-left">
+            <div class="flex items-center justify-between mb-4">
+              <i class="fas fa-chart-line text-2xl text-emerald-300"></i>
+              <span class="text-[0.65rem] tracking-[0.18em] uppercase text-gray-400">Growth</span>
+            </div>
+            <h4 class="text-xl font-semibold mb-2">Smart Digital Marketing</h4>
+            <p class="text-sm text-gray-300">
+              Growth systems aligned with your funnel – from SEO to launch pages and experiments.
+            </p>
+            <div class="mt-4 text-xs font-light text-gray-400">
+              SEO · Funnels · CRO
+            </div>
+          </div>
+
+          <div class="glass-card text-left">
+            <div class="flex items-center justify-between mb-4">
+              <i class="fas fa-video text-2xl text-emerald-300"></i>
+              <span class="text-[0.65rem] tracking-[0.18em] uppercase text-gray-400">Creative</span>
+            </div>
+            <h4 class="text-xl font-semibold mb-2">Media & Creative Studio</h4>
+            <p class="text-sm text-gray-300">
+              Visual systems – video, photo and design – that match your store’s UX and tone.
+            </p>
+            <div class="mt-4 text-xs font-light text-gray-400">
+              Video editing · Brand visuals
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="section">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+        <h2 class="mb-3">Why brands work with DevFusions</h2>
+        <h3 class="max-w-3xl mx-auto">Practical advantages that go beyond just design.</h3>
+
+        <div class="benefit-grid gap-5 mt-6">
+          <div class="glass-card text-left">
+            <i class="fas fa-bullseye text-xl mb-3 text-emerald-300"></i>
+            <h5 class="text-lg font-semibold mb-1">Conversion-first builds</h5>
+            <p class="text-sm text-gray-300">
+              Every layout is architected around clicks, cart adds and checkouts – not just looks.
+            </p>
+          </div>
+
+          <div class="glass-card text-left">
+            <i class="fas fa-code text-xl mb-3 text-emerald-300"></i>
+            <h5 class="text-lg font-semibold mb-1">Shopify & WordPress experts</h5>
+            <p class="text-sm text-gray-300">
+              Deep experience with ecommerce platforms, themes and tech stacks.
+            </p>
+          </div>
+
+          <div class="glass-card text-left">
+            <i class="fas fa-robot text-xl mb-3 text-emerald-300"></i>
+            <h5 class="text-lg font-semibold mb-1">AI & automation ready</h5>
+            <p class="text-sm text-gray-300">
+              Sites built ready for AI tools, flows and internal dashboards from day one.
+            </p>
+          </div>
+
+          <div class="glass-card text-left">
+            <i class="fas fa-tachometer-alt text-xl mb-3 text-emerald-300"></i>
+            <h5 class="text-lg font-semibold mb-1">Speed & performance</h5>
+            <p class="text-sm text-gray-300">
+              Clean, optimized builds tuned for fast mobile performance.
+            </p>
+          </div>
+
+          <div class="glass-card text-left">
+            <i class="fas fa-handshake text-xl mb-3 text-emerald-300"></i>
+            <h5 class="text-lg font-semibold mb-1">Transparent collaboration</h5>
+            <p class="text-sm text-gray-300">
+              Clear timelines, communication and deliverables at every stage.
+            </p>
+          </div>
+
+          <div class="glass-card text-left">
+            <i class="fas fa-wrench text-xl mb-3 text-emerald-300"></i>
+            <h5 class="text-lg font-semibold mb-1">Ongoing support</h5>
+            <p class="text-sm text-gray-300">
+              Long-term care plans, tweaks and optimization cycles.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK / CASE STUDIES -->
+    <section id="work" class="section">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-6">
+          <div>
+            <h2 class="mb-2">Selected work</h2>
+            <h3 class="mb-0">Snapshots of the kind of builds DevFusions specialises in.</h3>
+          </div>
+          <p class="text-xs text-gray-500 uppercase tracking-[0.16em]">
+            Example layouts · not client logos
+          </p>
+        </div>
+
+        <div class="work-grid gap-5">
+          <div class="glass-card text-left">
+            <p class="text-[0.7rem] uppercase tracking-[0.18em] text-emerald-300 mb-2">Beauty & skincare</p>
+            <h4 class="text-lg font-semibold mb-2">Minimal product-first store</h4>
+            <p class="text-sm text-gray-300 mb-3">
+              Clean grid, strong product detail pages and a simple funnel tuned for repeat orders.
+            </p>
+            <div class="flex flex-wrap gap-2 text-[0.7rem] text-gray-200">
+              <span class="pill px-3 py-1">Shopify custom</span>
+              <span class="pill px-3 py-1">Animations</span>
+              <span class="pill px-3 py-1">Mobile-first</span>
+            </div>
+          </div>
+
+          <div class="glass-card text-left">
+            <p class="text-[0.7rem] uppercase tracking-[0.18em] text-emerald-300 mb-2">Accessories & lifestyle</p>
+            <h4 class="text-lg font-semibold mb-2">High-contrast catalog layout</h4>
+            <p class="text-sm text-gray-300 mb-3">
+              Editorial-style listing pages with fast filters and quick-view for faster decisions.
+            </p>
+            <div class="flex flex-wrap gap-2 text-[0.7rem] text-gray-200">
+              <span class="pill px-3 py-1">WordPress</span>
+              <span class="pill px-3 py-1">WooCommerce</span>
+              <span class="pill px-3 py-1">SEO-focused</span>
+            </div>
+          </div>
+
+          <div class="glass-card text-left">
+            <p class="text-[0.7rem] uppercase tracking-[0.18em] text-emerald-300 mb-2">SaaS & dashboards</p>
+            <h4 class="text-lg font-semibold mb-2">AI-native product dashboard</h4>
+            <p class="text-sm text-gray-300 mb-3">
+              Panel-style layout for metrics, automation triggers and high-level product controls.
+            </p>
+            <div class="flex flex-wrap gap-2 text-[0.7rem] text-gray-200">
+              <span class="pill px-3 py-1">Custom JS</span>
+              <span class="pill px-3 py-1">API-ready</span>
+              <span class="pill px-3 py-1">Dark UI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" class="section">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+        <h2 class="mb-3">How we work</h2>
+        <h3 class="max-w-3xl mx-auto">
+          A lean, clear process so you always know what’s happening next.
+        </h3>
+
+        <div class="process-grid gap-5 mt-6">
+          <div class="glass-card text-left">
+            <p class="text-[0.7rem] uppercase tracking-[0.18em] text-emerald-300 mb-2">Step 01</p>
+            <h5 class="text-lg font-semibold mb-1">Discovery & audit</h5>
+            <p class="text-sm text-gray-300">
+              Short call or WhatsApp thread to understand product, goals and current stack.
+            </p>
+          </div>
+          <div class="glass-card text-left">
+            <p class="text-[0.7rem] uppercase tracking-[0.18em] text-emerald-300 mb-2">Step 02</p>
+            <h5 class="text-lg font-semibold mb-1">Structure & UX</h5>
+            <p class="text-sm text-gray-300">
+              Map pages, flows and funnels. Align on layout logic before full design.
+            </p>
+          </div>
+          <div class="glass-card text-left">
+            <p class="text-[0.7rem] uppercase tracking-[0.18em] text-emerald-300 mb-2">Step 03</p>
+            <h5 class="text-lg font-semibold mb-1">Build & integration</h5>
+            <p class="text-sm text-gray-300">
+              Develop in Shopify, WordPress or custom stack with clean, documented code.
+            </p>
+          </div>
+          <div class="glass-card text-left">
+            <p class="text-[0.7rem] uppercase tracking-[0.18em] text-emerald-300 mb-2">Step 04</p>
+            <h5 class="text-lg font-semibold mb-1">Launch & iterate</h5>
+            <p class="text-sm text-gray-300">
+              Go live, monitor metrics and improve based on real usage and feedback.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 about-grid items-start">
+        <div class="lg:pr-10 space-y-6">
+          <h2 class="lg:text-left text-center mb-2">About DevFusions</h2>
+          <p class="text-gray-200 text-[0.98rem] leading-relaxed">
+            DevFusions is a small, focused studio dedicated to building high-end, AI-native web
+            experiences. We specialise in high-converting ecommerce and SaaS platforms using
+            Shopify, WordPress and custom JavaScript stacks. Every build is performance-first,
+            transparent and designed to be future-proof.
+          </p>
+          <div class="flex flex-wrap gap-2.5">
+            <span class="pill px-4 py-1.5 text-[0.65rem]">Shopify & WordPress experts</span>
+            <span class="pill px-4 py-1.5 text-[0.65rem]">Conversion-focused UI/UX</span>
+          </div>
+        </div>
+
+        <div class="glass-card lg:mt-0 mt-8">
+          <h5 class="text-xl font-semibold mb-4 border-b border-emerald-900/70 pb-3">
+            Our Core Focus
+          </h5>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <small class="text-gray-500 block mb-1">Core stack</small>
+              <strong>Shopify · WordPress · JavaScript</strong>
+            </li>
+            <li>
+              <small class="text-gray-500 block mb-1">Focus</small>
+              <strong>Ecommerce & SaaS platforms</strong>
+            </li>
+            <li>
+              <small class="text-gray-500 block mb-1">Automation</small>
+              <strong>AI tools · workflows · dashboards</strong>
+            </li>
+            <li>
+              <small class="text-gray-500 block mb-1">Growth</small>
+              <strong>SEO · funnels · CRO experiments</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- GOOGLE STYLE REVIEWS (WITH MORE FEEDBACK) -->
+    <section id="reviews" class="section">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-6">
+          <div>
+            <h2 class="mb-2">Client reviews</h2>
+            <h3 class="mb-0">What founders and teams say after shipping with DevFusions.</h3>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-gray-300">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center">
+                <span class="font-bold text-[#4285F4] text-lg">G</span>
+              </div>
+              <div>
+                <p class="font-semibold leading-tight flex items-center gap-1">
+                  5.0
+                  <span class="text-yellow-400 text-xs">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                  </span>
+                </p>
+                <p class="text-xs text-gray-400">Google-style internal feedback summary</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reviews-grid gap-5">
+          <!-- Review 1 -->
+          <div class="glass-card text-left">
+            <div class="flex items-center mb-3">
+              <div class="w-9 h-9 rounded-full bg-emerald-900 flex items-center justify-center text-sm font-semibold">
+                AS
+              </div>
+              <div class="ml-3">
+                <p class="text-sm font-semibold">Lifestyle brand founder</p>
+                <p class="text-[0.7rem] text-gray-500">Store redesign & speed</p>
+              </div>
+            </div>
+            <div class="flex items-center text-yellow-400 text-xs mb-2">
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star"></i>
+              <span class="ml-2 text-[0.7rem] text-gray-400">Verified style feedback</span>
+            </div>
+            <p class="text-sm text-gray-200">
+              “Navigation, product pages and checkout all feel sorted now. We saw a clear lift in
+              add-to-carts right after launch.”
+            </p>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="glass-card text-left">
+            <div class="flex items-center mb-3">
+              <div class="w-9 h-9 rounded-full bg-emerald-900 flex items-center justify-center text-sm font-semibold">
+                RK
+              </div>
+              <div class="ml-3">
+                <p class="text-sm font-semibold">D2C accessories brand</p>
+                <p class="text-[0.7rem] text-gray-500">New Shopify build</p>
+              </div>
+            </div>
+            <div class="flex items-center text-yellow-400 text-xs mb-2">
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star"></i>
+              <span class="ml-2 text-[0.7rem] text-gray-400">Google style rating card</span>
+            </div>
+            <p class="text-sm text-gray-200">
+              “Everything feels super clean on mobile. The store loads fast and the collections are
+              easy to browse even on slower networks.”
+            </p>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="glass-card text-left">
+            <div class="flex items-center mb-3">
+              <div class="w-9 h-9 rounded-full bg-emerald-900 flex items-center justify-center text-sm font-semibold">
+                SP
+              </div>
+              <div class="ml-3">
+                <p class="text-sm font-semibold">SaaS founder</p>
+                <p class="text-[0.7rem] text-gray-500">Dashboard & landing</p>
+              </div>
+            </div>
+            <div class="flex items-center text-yellow-400 text-xs mb-2">
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star"></i>
+              <span class="ml-2 text-[0.7rem] text-gray-400">Internal review style</span>
+            </div>
+            <p class="text-sm text-gray-200">
+              “DevFusions helped structure the product story plus the actual UI. The dashboard now
+              feels usable even for non-technical teams.”
+            </p>
+          </div>
+
+          <!-- Review 4 -->
+          <div class="glass-card text-left">
+            <div class="flex items-center mb-3">
+              <div class="w-9 h-9 rounded-full bg-emerald-900 flex items-center justify-center text-sm font-semibold">
+                HM
+              </div>
+              <div class="ml-3">
+                <p class="text-sm font-semibold">Home decor store owner</p>
+                <p class="text-[0.7rem] text-gray-500">Theme clean-up</p>
+              </div>
+            </div>
+            <div class="flex items-center text-yellow-400 text-xs mb-2">
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star"></i>
+              <span class="ml-2 text-[0.7rem] text-gray-400">Performance-focused feedback</span>
+            </div>
+            <p class="text-sm text-gray-200">
+              “We had a heavy theme with random apps. After DevFusions, pages feel lighter and
+              customers reach checkout with fewer drops.”
+            </p>
+          </div>
+
+          <!-- Review 5 -->
+          <div class="glass-card text-left">
+            <div class="flex items-center mb-3">
+              <div class="w-9 h-9 rounded-full bg-emerald-900 flex items-center justify-center text-sm font-semibold">
+                VN
+              </div>
+              <div class="ml-3">
+                <p class="text-sm font-semibold">Education brand</p>
+                <p class="text-[0.7rem] text-gray-500">Multi-page site</p>
+              </div>
+            </div>
+            <div class="flex items-center text-yellow-400 text-xs mb-2">
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star mr-1"></i>
+              <i class="fas fa-star"></i>
+              <span class="ml-2 text-[0.7rem] text-gray-400">Clarity of communication</span>
+            </div>
+            <p class="text-sm text-gray-200">
+              “They helped organise all our information into clear sections. The site feels calm,
+              modern and easy to navigate.”
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section bg-black/40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 contact-grid gap-8">
+        <div class="space-y-6">
+          <h2 class="mb-3 lg:text-left text-center">Work with DevFusions.</h2>
+          <p class="text-sm text-gray-300 mb-2 max-w-xl">
+            Send a quick WhatsApp with a short intro – what you sell, what you need and your rough
+            timeline. The studio will reply with next steps and a clear path.
+          </p>
+
+          <div class="glass-card p-6 space-y-5">
+            <h5 class="text-lg font-semibold">Best fit for DevFusions</h5>
+            <ul class="space-y-2 text-sm text-gray-200">
+              <li>· New Shopify or WooCommerce store</li>
+              <li>· Redesign and speed-optimise running store</li>
+              <li>· Funnels & landing pages for launches</li>
+              <li>· AI tools, dashboards and small SaaS builds</li>
+            </ul>
+
+            <div class="flex flex-wrap gap-3 pt-3">
+              <a href="https://wa.me/918488093581" target="_blank" class="btn primary-btn text-[0.78rem]">
+                WhatsApp your project
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-5 lg:mt-8 mt-4">
+          <div class="glass-card p-6 md:p-7">
+            <h5 class="text-lg font-semibold mb-4">Contact channel</h5>
+            <div class="space-y-4 text-sm">
+              <div class="flex items-start space-x-3">
+                <i class="fab fa-whatsapp text-lg text-emerald-300 w-6 mt-0.5"></i>
+                <p>
+                  WhatsApp:
+                  <a href="https://wa.me/918488093581" target="_blank" class="hover:text-emerald-300">
+                    +91 84880 93581
+                  </a>
+                  <span class="block text-gray-500 text-xs mt-0.5">
+                    Primary contact for all projects.
+                  </span>
+                </p>
+              </div>
+              <div class="flex items-start space-x-3">
+                <i class="fas fa-map-marker-alt text-lg text-emerald-300 w-6 mt-0.5"></i>
+                <p>Location: India · Remote-friendly</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 md:p-7">
+            <h5 class="text-lg font-semibold mb-3">What you can expect</h5>
+            <ul class="space-y-2 text-sm text-gray-200">
+              <li>· Quick WhatsApp reply from the studio</li>
+              <li>· Short call only if it actually helps</li>
+              <li>· Clear scope and timeline for the build</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FLOATING SHORT "CALL" BUTTON (WHATSAPP) -->
+  <a href="https://wa.me/918488093581" target="_blank" class="cta-float" aria-label="Call DevFusions on WhatsApp">
+    <span class="cta-tooltip">Open WhatsApp to book a call</span>
+    <i class="fas fa-phone"></i>
+    <span>Call</span>
+  </a>
+
+  <!-- FOOTER -->
+  <footer class="mt-10 bg-black/90 border-t border-emerald-900/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 footer-grid gap-8">
+      <div>
+        <div class="logo mb-3 tracking-[0.25em]">DevFusions</div>
+        <p class="text-gray-400 text-sm mb-4">
+          A 3D-inspired web, Shopify & AI studio helping brands ship experiences that convert.
+        </p>
+        <p class="text-[0.75rem] text-emerald-300 uppercase tracking-[0.18em]">
+          Studio · Remote · India
+        </p>
+      </div>
+
+      <div class="lg:text-left text-center">
+        <h6 class="font-semibold mb-3 text-sm tracking-[0.18em] uppercase text-gray-200">
+          Navigation
+        </h6>
+        <ul class="space-y-1 text-sm text-gray-400">
+          <li><a href="#home" class="hover:text-emerald-300">Home</a></li>
+          <li><a href="#services" class="hover:text-emerald-300">Services</a></li>
+          <li><a href="#work" class="hover:text-emerald-300">Work</a></li>
+          <li><a href="#process" class="hover:text-emerald-300">Process</a></li>
+          <li><a href="#reviews" class="hover:text-emerald-300">Reviews</a></li>
+          <li><a href="#contact" class="hover:text-emerald-300">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="lg:text-left text-center">
+        <h6 class="font-semibold mb-3 text-sm tracking-[0.18em] uppercase text-gray-200">
+          Contact
+        </h6>
+        <p class="text-gray-400 text-sm mb-3">WhatsApp: +91 84880 93581</p>
+        <p class="font-semibold text-sm text-emerald-300">
+          Built for performance, design & automation.
+        </p>
+      </div>
+    </div>
+
+    <div class="border-t border-emerald-900/40 py-4 bg-black">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-2 text-[0.75rem] text-gray-500">
+        <p>© DevFusions – All rights reserved.</p>
+        <span>Web & Shopify Studio</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = document.querySelectorAll('.section');
+
+      // Smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const href = this.getAttribute('href');
+          if (!href || href === '#') return;
+          const target = document.querySelector(href);
+          if (!target) return;
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      // Section reveal
+      const observerOptions = { root: null, rootMargin: '0px', threshold: 0.2 };
+      const observer = new IntersectionObserver((entries, observerInstance) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observerInstance.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach(section => observer.observe(section));
+    });
+  </script>
+</body>
+</html>
